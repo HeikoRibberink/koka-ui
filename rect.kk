@@ -75,23 +75,6 @@ pub fun foreach(rect : rect, action : (int, int) -> e ()) : e ()
     for(ry, ry + rh - 1) fn(y)
       action(x, y)
 
-pub effect canvas
-  fun fill(rect : rect, char : char) : ()
-  fun write(rect : rect, string : string) : ()
-
-pub fun canvas(width : int, height : int, action)
-  var array := vector(width * height, ' ')
-  with handler
-    fun fill(rect : rect, char : char)
-      rect.foreach fn(x, y)
-        array[x + y * width] := char
-    fun write(rect : rect, string : string)
-      with index-in(string)
-      string.foreach fn(c)
-        with i <- take-index
-        array[rect.x + i + rect.y * width] := c
-  action(Rect(0, 0, width, height))
-
 pub fun test()
   val r = Rect(3, 4, 7, 3)
   assert-eq(r.slice(x=2), Rect(5, 4, 5, 3), "slice x")
