@@ -10,10 +10,11 @@ fun main()
     vertical
       horizontal
         text("Hi")
-        border
-          text("Big")
+        vertical
+          space(h=1)
+          border
+            text("Big")
         text("Man")
-      text("There")
       text("World")
   with canvas(size)
   draw(Rect(0, 0, width, height))
