@@ -2,7 +2,7 @@ module ui
 
 import std/num/ddouble
 
-import rect
+pub import rect
 pub import tree
 pub import canvas
 pub import math

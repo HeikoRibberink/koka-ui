@@ -1,6 +1,8 @@
+import components/border
+import components/padding
 import components/list
-import components/text
 import components/space
+import components/text
 import ui
 
 fun main()
@@ -8,8 +10,8 @@ fun main()
     vertical
       horizontal
         text("Hi")
-        space(h=1)
-        text("Big")
+        border
+          text("Big")
         text("Man")
       text("There")
       text("World")
