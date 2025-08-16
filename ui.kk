@@ -12,12 +12,14 @@ pub type ui-elem<e>
     size : ivec2
     draw : (rect) -> <canvas|e> ()
 
-pub alias ui-tree<e,f> = () -> <parent<ui-elem<e>>|f> ()
+pub alias ui-parent<e> = <parent<ui-elem<e>>>
+
+pub alias ui-tree<e,f> = () -> <ui-parent<e>|f> ()
 
 pub fun ui(action : ui-tree<e,<exn|f>>) : <exn|f> ui-elem<e>
   with handler
     ctl add-child(child)
       child
     return(_)
-      throw("Expected to get exactly a ui root element.")
+      throw("Expected to get exactly one ui root element.")
   action()

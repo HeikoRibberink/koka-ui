@@ -2,6 +2,7 @@ module canvas
 
 pub import math
 pub import ds/indexed
+pub import rect
 
 pub effect canvas
   fun size() : ivec2
@@ -30,3 +31,6 @@ pub fun write(idx : ivec2, text : string)
   text.foreach fn(c)
     with i <- take-increment
     set(idx + (1, 0) * i, c)
+
+// Draw nothing
+pub val nodraw : (rect : rect) -> canvas () = ignore
