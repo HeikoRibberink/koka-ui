@@ -2,8 +2,12 @@ module text
 
 pub import rect
 pub import tree
+pub import ui
+import canvas
 
-fun text(text : string)
+pub fun text(text : string)
   fun draw(rect : rect)
-    write(rect, text)
-  ((text.count, 1), draw).add-child
+    if text.count > rect.w then
+      throw("text(" ++ text ++ ") too wide.")
+    write(rect.xy, text)
+  UiElem((text.count, 1), draw).add-child

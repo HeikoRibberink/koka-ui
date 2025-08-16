@@ -4,7 +4,7 @@ import assert
 
 import ds/indexed
 
-abstract struct rect
+pub struct rect
   x : int
   y : int
   w : int
@@ -21,6 +21,14 @@ pub fbip fun rect/(==)(this : rect, other : rect) : e bool
 pub fun rect/show(this : rect) : e string
   match this
     Rect(x, y, w, h) -> "Rect(x: " ++ x.show ++ ", y: " ++ y.show ++ ", w: " ++ w.show ++ ", h: " ++ h.show ++ ")"
+
+pub fbip fun rect/xy(this : rect) : (int, int)
+  val Rect(x, y, _, _) = this
+  (x, y)
+
+pub fbip fun rect/wh(this : rect) : (int, int)
+  val Rect(_, _, w, h) = this
+  (w, h)
 
 fip fun line-slice(l : int, x' : int, l' : int) : (x : int, l : int)
   val new-x =
@@ -46,20 +54,26 @@ pub fun slice(
   x : int = 0,
   y : int = 0,
   w : int = slice/defaultarg(x, rect.w),
-  h : int = slice/defaultarg(y, rect.h)
+  h : int = slice/defaultarg(y, rect.h),
+  ?kk-file-line : string
 ) : exn rect
   val Rect(rx, ry, rw, rh) = rect
   val (dx, new-w) = line-slice(rw, x, w)
   val (dy, new-h) = line-slice(rh, y, h)
   val new = Rect(rx + dx, ry + dy, new-w, new-h)
-  if dx < 0 || dx >= rw || 
-     dy < 0 || dy >= rh || 
-     dx + new-w < 0 || dx + new-w >= rw || 
-     dy + new-h < 0 || dy + new-h >= rh 
+  if dx < 0 || dx > rw || 
+     dy < 0 || dy > rh || 
+     dx + new-w < 0 || dx + new-w > rw || 
+     dy + new-h < 0 || dy + new-h > rh 
   then
-    throw(show(new) ++ " is not a valid slice of " ++ show(rect))
+    throw(show(new) ++ " is not a valid slice of " ++ show(rect) ++ " at " ++ ?kk-file-line)
   else
     new
+
+pub fip fun move(rect : rect, dxy : (int, int)) : rect
+  val Rect(x, y, w, h) = rect
+  val (dx, dy) = dxy
+  Rect(x + dx, y + dy, w, h)
 
 pub fun single(rect : rect, x : int, y : int) : exn rect
   val Rect(rx, ry, rw, rh) = rect

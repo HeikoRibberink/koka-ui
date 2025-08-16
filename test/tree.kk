@@ -1,10 +1,16 @@
+import ui
+import text
+import list
 
-//fun main()
-//  ui
-//    vertical        // w5h3
-//      text("Hi")    // w3h1
-//      text("There") // w5h1
-//      text("World") // w5h1
-//    horizontal      //
-//      border(2, Black) // w6h3
-//        text("Nooo")   // w4h1
+fun main()
+  val UiElem(size as (width, height), draw) = ui 
+    vertical
+      horizontal
+        text("Hi")
+        text("Big")
+        text("Man")
+      text("There")
+      text("World")
+  with canvas(size)
+  draw(Rect(0, 0, width, height))
+  finish()
