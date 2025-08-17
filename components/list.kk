@@ -4,32 +4,25 @@ pub import rect
 pub import tree
 pub import ui
 
-pub fun vertical(action : ui-tree<_, _>)
+fun anylist(to-main : ((int, int)) -> int, to-cross : ((int, int)) -> int, to-coord : (main : int, cross : int) -> (int, int), action : ui-tree<_, _>)
   val children : list<ui-elem<_>> = children(action)
   val sizes : list<(int, int)> = children.map(size)
-  val width : int = sizes.map(fst).foldl(0, int/max)
-  val height : int = sizes.map(snd).sum
+  val main-size : int = sizes.map(to-main).sum
+  val cross-size : int = sizes.map(to-cross).foldl(0, int/max)
   fun draw(rect : rect)
-    val cy = ref(0)
+    var m := 0 // Position along main axis
     children.foreach fn(UiElem(subsize, subdraw))
-      val (_, h) = subsize
-      val ny = !cy + h
-      val sub = rect.slice(0, !cy, width, h)
-      cy.set(ny)
-      subdraw(sub)
-  UiElem((width, height), draw).add-child
+      val ml = subsize.to-main // Main axis length
+      val (subw, subh) = to-coord(ml, cross-size)
+      val (subx, suby) = to-coord(m, 0)
+      val sub = rect.slice(subx, suby, subw, subh)
+      m := m + ml
+      mask<local> {subdraw(sub)}
+  UiElem(to-coord(main-size, cross-size), draw).add-child
 
 pub fun horizontal(action : ui-tree<_, _>)
-  val children : list<ui-elem<_>> = children(action)
-  val sizes : list<(int, int)> = children.map(size)
-  val width : int = sizes.map(fst).sum
-  val height : int = sizes.map(snd).foldl(0, int/max)
-  fun draw(rect : rect)
-    val cx = ref(0)
-    children.foreach fn(UiElem(subsize, subdraw))
-      val (w, _) = subsize
-      val nx = !cx + w
-      val sub = rect.slice(!cx, 0, w, height)
-      cx.set(nx)
-      subdraw(sub)
-  UiElem((width, height), draw).add-child
+  anylist(tuple2/fst, tuple2/snd, fn(main, cross) (main, cross), action)
+
+pub fun vertical(action : ui-tree<_, _>)
+  anylist(tuple2/snd, tuple2/fst, fn(main, cross) (cross, main), action)
+
