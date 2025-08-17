@@ -20,9 +20,9 @@ fun anylist(to-main : ((int, int)) -> int, to-cross : ((int, int)) -> int, to-co
       mask<local> {subdraw(sub)}
   UiElem(to-coord(main-size, cross-size), draw).add-child
 
-pub fun horizontal(action : ui-tree<_, _>)
+pub inline fun horizontal(action : ui-tree<_, _>)
   anylist(tuple2/fst, tuple2/snd, fn(main, cross) (main, cross), action)
 
-pub fun vertical(action : ui-tree<_, _>)
+pub inline fun vertical(action : ui-tree<_, _>)
   anylist(tuple2/snd, tuple2/fst, fn(main, cross) (cross, main), action)
 
