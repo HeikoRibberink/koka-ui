@@ -23,3 +23,9 @@ pub fun ui(action : ui-tree<e,<exn|f>>) : <exn|f> ui-elem<e>
     return(_)
       throw("Expected to get exactly one ui root element.")
   action()
+
+pub fun ui-elem/show(elem : ui-elem<_>) : _ string
+  val (w, h) = elem.size
+  with canvas(elem.size)
+  elem.draw.(Rect(0, 0, w, h))
+  render()

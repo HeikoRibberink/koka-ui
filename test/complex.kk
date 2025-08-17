@@ -6,7 +6,7 @@ import components/text
 import ui
 
 fun main()
-  val UiElem(size as (width, height), draw) = ui 
+  ui 
     vertical
       horizontal
         text("Hi")
@@ -16,6 +16,4 @@ fun main()
             text("Big")
         text("Man")
       text("World")
-  with canvas(size)
-  draw(Rect(0, 0, width, height))
-  finish()
+  .println
