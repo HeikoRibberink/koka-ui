@@ -1,8 +1,7 @@
 module rect
 
-import assert
-
-import ds/indexed
+import hlib/assert
+import hlib/ds/indexed
 
 pub struct rect
   x : int

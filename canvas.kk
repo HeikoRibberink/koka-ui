@@ -1,7 +1,8 @@
 module canvas
 
-pub import math
-pub import ds/indexed
+pub import hlib/math
+pub import hlib/ds/indexed
+
 pub import rect
 
 pub effect canvas

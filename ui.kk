@@ -2,10 +2,11 @@ module ui
 
 import std/num/ddouble
 
+pub import hlib/math
+
 pub import rect
 pub import tree
 pub import canvas
-pub import math
 
 pub type ui-elem<e>
   UiElem
