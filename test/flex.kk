@@ -12,7 +12,7 @@ fun main()
       hflex
         no-grow
           text("Hello")
-        grow(id)
+        grow(_ * 1)
           space()
         no-grow 
           text("world!")
