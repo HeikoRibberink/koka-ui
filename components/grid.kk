@@ -45,10 +45,10 @@ pub fun grid(rows-cols : (int, int), col-grow : vector<(int) -> int>, row-grow :
     children-grid.foreach-indexed fn((r, c), child)
       match child
         Just(UiElem(_, subdraw)) ->
-          val w = col-sizes[c] + col-grow[c](extra-w)
-          val h = row-sizes[r] + row-grow[r](extra-h)
-          val x = x-pos[r]
-          val y = y-pos[c]
+          val w = grown-col-sizes[c]
+          val h = grown-row-sizes[r]
+          val x = x-pos[c]
+          val y = y-pos[r]
           val sub = rect.slice(x, y, w, h)
           subdraw(sub)
         Nothing -> ()
