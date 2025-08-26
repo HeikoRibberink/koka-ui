@@ -3,6 +3,7 @@ module flex
 pub import rect
 pub import tree
 pub import ui
+pub import util
 
 abstract type flex-child<e>
   FlexChild
@@ -11,7 +12,7 @@ abstract type flex-child<e>
 
 pub alias flex-tree<e,f> = () -> <parent<flex-child<e>>|f> ()
 
-pub fun grow(grow : (int) -> int, action) : _ ()
+pub fun grow(grow : (int) -> _ int, action) : _ ()
   with handler
     fun add-child(c)
       add-child(FlexChild(grow, c))
@@ -26,7 +27,7 @@ fun anyflex(to-main : ((int, int)) -> int, to-cross : ((int, int)) -> int, to-co
   val main-size : int = sizes.map(to-main).sum
   val cross-size : int = sizes.map(to-cross).foldl(0, int/max)
   fun draw(rect : rect)
-    val extra-size = rect.wh.to-main - main-size
+    val extra-size = get-extra-size(rect, to-coord(main-size, cross-size)).to-main
     assert(show(rect) ++ " is too small. Flexbox requires at least " ++ show(main-size) ++ " along the main axis.", extra-size >= 0)
     var m := 0 // Position along main axis
     children.foreach fn(FlexChild(grow, UiElem(subsize, subdraw)))
