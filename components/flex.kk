@@ -32,7 +32,7 @@ fun anyflex(to-main : ((int, int)) -> int, to-cross : ((int, int)) -> int, to-co
     var m := 0 // Position along main axis
     children.foreach fn(FlexChild(grow, UiElem(subsize, subdraw)))
       val ml = subsize.to-main + grow(extra-size) // Main axis length
-      val (subw, subh) = to-coord(ml, cross-size)
+      val (subw, subh) = to-coord(ml, rect.wh.to-cross)
       val (subx, suby) = to-coord(m, 0)
       val sub = rect.slice(subx, suby, subw, subh)
       m := m + ml
