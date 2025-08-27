@@ -1,4 +1,5 @@
 import components/border
+import components/center
 import components/flex
 import components/grid
 import components/padding
@@ -31,11 +32,13 @@ fun main()
           grow(80.percent)
             vflex
               with grow((100/3).percent)
-              text("More text!")
+              center 
+                text("Centered text?")
               border
                 vflex
                   grow(50.percent) {space()}
                   no-grow
+                    with center
                     text("And more!")
   while {True}
     val (rows, cols) = get-terminal-size()
