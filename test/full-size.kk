@@ -32,11 +32,12 @@ fun main()
           grow(80.percent)
             vflex
               with grow((100/3).percent)
-              center 
+              center
                 text("Centered text?")
               border
                 vflex
-                  grow(50.percent) {space()}
+                  grow(50.percent)
+                    space()
                   no-grow
                     with center
                     text("And more!")
